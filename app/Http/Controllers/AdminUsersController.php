@@ -18,45 +18,45 @@ class AdminUsersController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
-//    public function create()
-//    {
-//
-//        $roles = Role::pluck('name', 'id')->all();
-//
-//        return view('admin.users.create', compact('roles'));
-//    }
-//
+    public function create()
+    {
+
+        $roles = Role::pluck('name', 'id')->all();
+
+        return view('admin.users.create', compact('roles'));
+    }
+
 //    public function show($id)
 //    {
 //        return view('admin.users.show');
 //    }
-//
-//    public function store(UsersRequest $request)
-//    {
-//
-//        if(trim($request->password == '')){
-//            $input = $request->except('password');
-//        } else {
-//            $input = $request->all();
-//            $input['password'] = bcrypt($request->password);
-//        };
-//
-//        if ($file = $request->file('photo_id')) {
-//
-//            $name = time() . $file->getClientOriginalName();
-//            $file->move('images', $name);
-//
-//            $photo = Photo::create(['file' => $name]);
-//
-//            $input['photo_id'] = $photo->id;
-//        }
-//
-//        User::create($input);
-//
-//        return redirect('/admin/users');
-//    }
-//
-//
+
+    public function store(UsersRequest $request)
+    {
+
+        if(trim($request->password == '')){
+            $input = $request->except('password');
+        } else {
+            $input = $request->all();
+            $input['password'] = bcrypt($request->password);
+        };
+
+        if ($file = $request->file('photo_id')) {
+
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+
+            $photo = Photo::create(['file' => $name]);
+
+            $input['photo_id'] = $photo->id;
+        }
+
+        User::create($input);
+
+        return redirect('/admin/users');
+    }
+
+
 //    /**
 //     * Show the form for editing the specified resource.
 //     *
