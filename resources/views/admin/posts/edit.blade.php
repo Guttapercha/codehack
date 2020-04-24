@@ -1,7 +1,6 @@
-<?php
-/**
- * Created by IntelliJ IDEA.
- * User: KORE001
- * Date: 4/12/2020
- * Time: 9:59 PM
- */
+@extends ('layouts.admin')
+
+
+@section('content')
+<h1>Edit Post</h1>
+@stop
