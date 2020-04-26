@@ -4,7 +4,7 @@
 @section('content')
 <h1>Posts</h1>
 
-<p class=""bg-danger">{{session('deleted_post')}}</p>
+<p class="bg-danger">{{session('deleted_post')}}</p>
 
 <table class="table table-hover">
     <thead>
