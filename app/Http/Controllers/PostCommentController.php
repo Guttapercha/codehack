@@ -39,19 +39,17 @@ class PostCommentController extends Controller
      */
     public function store(Request $request)
     {
-        $post = Post::findOrFail($request['post_id']);
-        $photo=$post->photo->file;
         $user = Auth::user();
         $data = [
             'post_id' => $request->post_id,
             'author' => $user->name,
             'email' => $user->email,
-            'photo' => $photo,
+            'photo' => $user->photo != null ? $user->photo->file: null,
             'body' => $request->body
         ];
 
         Comment::create($data);
-        Session::flash('comment_message', 'Your message has been submitted and is waiting for moderation'. $photo);
+        Session::flash('comment_message', 'Your message has been submitted and is waiting for moderation' );
 
         return redirect()->back();
     }
@@ -64,7 +62,11 @@ class PostCommentController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $comments = $post->comments;
+
+        return view('admin.comments.show', compact('comments'));
+
     }
 
     /**
@@ -87,7 +89,9 @@ class PostCommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Comment::findOrFail($id)->update($request->all());
+
+        return redirect('admin/comments');
     }
 
     /**
@@ -98,6 +102,8 @@ class PostCommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Comment::findOrFail($id)->delete();
+
+        return redirect()->back();
     }
 }

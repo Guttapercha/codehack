@@ -16,8 +16,8 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($comments as $comment)
 
+    @foreach($comments as $comment)
     <tr>
         <td>{{$comment->id}}</td>
 
@@ -25,7 +25,6 @@
         <td>{{$comment->body}}</td>
         <td>{{$comment->email}}</td>
         <td><a href="{{route('home.post', $comment->post->id)}}">View Post</a></td>
-        <td><a href="{{route('replies.show', $comment->id)}}">View Replies</a></td>
         <td>
             @if($comment->is_active == 1)
 
@@ -65,7 +64,6 @@
             {!! Form::close() !!}
         </td>
     </tr>
-
     @endforeach
     </tbody>
 </table>

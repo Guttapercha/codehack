@@ -37,6 +37,8 @@
 
 <!-- Blog Comments -->
 
+@if(Auth::check())
+
 <!-- Comments Form -->
 <div class="well">
     <h4>Leave a Comment:</h4>
@@ -57,55 +59,89 @@
     {!! Form::close() !!}
 
 </div>
-
+@endif
 <hr>
 
 <!-- Posted Comments -->
-
+@if(count($post->comments)>0)
+@foreach($post->comments as $comment)
 <!-- Comment -->
 <div class="media">
     <a class="pull-left" href="#">
-        <img class="media-object" src="http://placehold.it/64x64" alt="">
+        <img height="64" class="media-object"
+             src="{{$comment->photo != null? $comment->photo: 'http://placehold.it/64x64'}}" alt="">
     </a>
     <div class="media-body">
-        <h4 class="media-heading">Start Bootstrap
-            <small>August 25, 2014 at 9:30 PM</small>
+        <h4 class="media-heading">{{$comment->author}}
+            <small>{{$comment->created_at->diffForHumans()}}</small>
         </h4>
-        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus
-        odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
-        Donec lacinia congue felis in faucibus.
-    </div>
-</div>
+        <p>{{$comment->body}}</p>
 
-<!-- Comment -->
-<div class="media">
-    <a class="pull-left" href="#">
-        <img class="media-object" src="http://placehold.it/64x64" alt="">
-    </a>
-    <div class="media-body">
-        <h4 class="media-heading">Start Bootstrap
-            <small>August 25, 2014 at 9:30 PM</small>
-        </h4>
-        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus
-        odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
-        Donec lacinia congue felis in faucibus.
-        <!-- Nested Comment -->
-        <div class="media">
+        <div class="comment-reply-container">
+
+            <button class="toggle-reply btn btn-primary pull-left">Reply</button>
+<!--            <div style="height: 10px;"></div>-->
+            <div class="comment-reply col-sm-6" style="display:none;">
+
+                {!! Form::open(['method'=>'POST', 'action'=>'CommentRepliesController@createReply']) !!}
+                <input type="hidden" name="comment_id" value="{{$comment->id}}">
+
+                <div class="form-group">
+                    {!! Form::label('body', 'Body:') !!}
+                    {!! Form::textarea('body', null, ['class'=>'form-control', 'rows'=>1]) !!}
+                </div>
+
+                <div class="form-group">
+                    {!! Form::submit('Submit', ['class'=>'btn btn-danger']) !!}
+                </div>
+
+                {!! Form::close() !!}
+            </div>
+
+        </div>
+
+        @if(count($comment->replies) > 0)
+
+        @foreach($comment->replies as $reply)
+
+        @if($reply->is_active ==1)
+
+
+        <!-- Start Nested Comment -->
+        <div class="media" style="margin-top: 30px;">
             <a class="pull-left" href="#">
-                <img class="media-object" src="http://placehold.it/64x64" alt="">
+                <img height="64" class="media-object"
+                     src="{{$reply->photo != null? $reply->photo: 'http://placehold.it/64x64'}}" alt="">
+
             </a>
             <div class="media-body">
-                <h4 class="media-heading">Nested Start Bootstrap
-                    <small>August 25, 2014 at 9:30 PM</small>
+                <h4 class="media-heading">{{$reply->author}}
+                    <small>{{$reply->created_at->diffForHumans()}}</small>
                 </h4>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
-                purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
-                fringilla. Donec lacinia congue felis in faucibus.
+                <p>{{$reply->body}}</p>
             </div>
+
+
+            <!-- End Nested Comment -->
         </div>
-        <!-- End Nested Comment -->
+
+        @endif
+        @endforeach
+        @endif
     </div>
 </div>
+@endforeach
+@endif
+
+@section('scripts')
+<script>
+    $(".comment-reply-container .toggle-reply").click(function () {
+
+        $(this).next().slideToggle("slow");
+
+    });
+</script>
+
 
 @stop
 
