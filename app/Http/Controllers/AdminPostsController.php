@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+
 
 use App\Http\Requests\PostsCreateRequest;
 use Illuminate\Http\Request;
@@ -12,6 +14,8 @@ use Illuminate\Support\Facades\Session;
 
 class AdminPostsController extends Controller
 {
+    use SluggableScopeHelpers;
+
     /**
      * Display a listing of the resource.
      *
@@ -139,9 +143,9 @@ class AdminPostsController extends Controller
         return redirect('/admin/posts');
     }
 
-    public function post($id)
+    public function post($slug)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::findBySlugOrFail($slug);
         $comments = $post->comments()->whereIsActive(1)->get();
 
         return view('post', compact('post', 'comments'));
