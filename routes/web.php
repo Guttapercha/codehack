@@ -38,6 +38,8 @@ Route::group(['middleware'=>'admin'], function (){
 
 });
 
+Route::delete('admin/delete/media', 'AdminMediasController@deleteMedia');
+
 Route::group(['middleware'=>'auth'], function(){
     Route::post('comment/reply', 'CommentRepliesController@createReply');
 });

@@ -59,7 +59,7 @@ return [
             ],
         ],
         'image' => [
-            'folder_name'  => 'photos',
+            'folder_name'  => 'images',
             'startup_view' => 'list',
             'max_size'     => 50000, // size in KB
             'valid_mime'   => [
