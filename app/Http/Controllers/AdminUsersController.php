@@ -98,6 +98,12 @@ class AdminUsersController extends Controller
 //        unset($input['password']);
 
         if($file = $request->file('photo_id')) {
+
+            if($user->photo != null) {
+                unlink(public_path(). $user->photo->file);
+                Photo::findOrFail($user->photo_id)->delete();
+            }
+
             $name = time(). $file->getClientOriginalName();
             $file->move('images', $name);
             $photo = Photo::create(['file'=>$name]);

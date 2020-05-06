@@ -27,12 +27,13 @@ class DatabaseSeeder extends Seeder
 
         factory(App\Role::class,3)->create();
         factory(App\Category::class,4)->create();
-        factory(App\Photo::class,1)->create();
+//        factory(App\Photo::class,1)->create();
 
         factory(App\Comment::class,5)->create()->each(function($c){
             $c->replies()->save(factory(App\CommentReply::class)->make());
         });
 
 //         $this->call(UsersTableSeeder::class);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

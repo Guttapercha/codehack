@@ -2,6 +2,8 @@
 
 
 @section('content')
+<div style="margin: 5%;">
+
 
 <h1>Post</h1>
 
@@ -132,7 +134,7 @@
 </div>
 @endforeach
 @endif
-
+</div>
 @section('scripts')
 <script>
     $(".comment-reply-container .toggle-reply").click(function () {

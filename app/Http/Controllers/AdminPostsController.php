@@ -110,6 +110,11 @@ class AdminPostsController extends Controller
         $input = $request->all();
 
         if($file = $request->file('photo_id')) {
+            if($post->photo != null) {
+                unlink(public_path(). $post->photo->file);
+                Photo::findOrFail($post->photo_id)->delete();
+            }
+
             $name = time(). $file->getClientOriginalName();
             $file->move('images', $name);
             $photo = Photo::create(['file'=>$name]);
@@ -117,7 +122,8 @@ class AdminPostsController extends Controller
             $input['photo_id'] = $photo->id;
         };
 
-        Auth::user()->posts()->whereId($id)->first()->update($input);
+//        Auth::user()->posts()->whereId($id)->first()->update($input);
+        $post->update($input);
 
         return redirect('admin/posts');
     }

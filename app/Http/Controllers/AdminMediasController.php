@@ -104,6 +104,7 @@ class AdminMediasController extends Controller
     {
         if (isset($request->delete_single)) {
             $this->destroy($request->photo);
+            unlink(public_path(). $request->photo->file);
             return redirect()->back();
         }
         if (isset($request->delete_all) && !empty($request->checkBoxArray)) {
@@ -111,6 +112,7 @@ class AdminMediasController extends Controller
 
             foreach ($photos as $photo) {
                 $photo->delete();
+                unlink(public_path(). $photo->file);
             }
             return redirect()->back();
         } else {
