@@ -24,8 +24,8 @@
         <td>{{$comment->author}}</td>
         <td>{{$comment->body}}</td>
         <td>{{$comment->email}}</td>
-        <td><a href="{{route('home.post', $comment->post->id)}}">View Post</a></td>
-        <td><a href="{{route('replies.show', $comment->id)}}">View Replies</a></td>
+        <td><a href="{{$comment->post == null ? route('comments.index') : route('home.post', $comment->post->slug) }}">View Post</a></td>
+        <td><a href="{{$comment->replies == null ? route('comments.index') : route('replies.show', $comment->id)}}">View Replies</a></td>
         <td>
             @if($comment->is_active == 1)
 

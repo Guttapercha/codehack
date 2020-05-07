@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
+Route::get('/logout', 'Auth\LoginController@logout');
+
 
 Auth::routes();
 
@@ -25,9 +25,8 @@ Route::get('/post/{id}', ['as'=>'home.post', 'uses'=>'AdminPostsController@post'
 
 Route::group(['middleware'=>'admin'], function (){
 
-    Route::get('/admin', function (){
-        return view('admin.index');
-    });
+    Route::get('/admin', 'AdminController@index');
+
     Route::resource('/admin/users', 'AdminUsersController');
     Route::resource('/admin/posts', 'AdminPostsController');
     Route::resource('/admin/categories', 'AdminCategoriesController');
