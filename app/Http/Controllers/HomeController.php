@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('front/home');
+        if (Auth::check() && Auth::user()->isAdmin()){
+            session(['admin' => 'yes']);
+        } else {
+            session(['admin' => 'no']);
+        }
+        return view('home');
     }
 }

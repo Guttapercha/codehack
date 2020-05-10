@@ -13,8 +13,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    You are logged in
+                    @if (session('admin')=="yes")
+                    <a href="{{route('admin.index')}}"> as admin </a>
+                    @endif
+                    !
                 </div>
             </div>
         </div>

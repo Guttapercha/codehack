@@ -9,11 +9,9 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    //
 
     public function index()
     {
-
         $postsCount = Post::count();
         $categoriesCount = Category::count();
         $commentsCount = Comment::count();
